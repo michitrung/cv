@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Thanh Trung Nguyen (Michal) — QA Automation Engineer</title>
+<meta name="description" content="Playwright/TypeScript QA engineer — full-stack test automation across UI, APIs, and databases." />
+<style>
+/* ── Tokens ── */
+:root {
+  --bg:              #fefefc;
+  --ink:             #1a1a1a;
+  --muted:           #6b6b6b;
+  --subtle:          #767370;
+  --rule:            #e5e3dc;
+  --accent:          #2a5db0;
+  --accent-hover:    #1a3d80;
+  --surface:         #f5f4f0;
+  --stack-bg:        #eeecea;
+  --chip-bg:         #f0eee8;
+  --chip-ink:        #555;
+  --chip-built-bg:   #e6f4eb;
+  --chip-built-ink:  #1a5c2a;
+  --chip-plan-bg:    #fdf3e3;
+  --chip-plan-ink:   #7a4f1a;
+  --planned-bg:      #faf8f5;
+  --planned-border:  #d8d4cc;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:              #15140f;
+    --ink:             #ecebe6;
+    --muted:           #9a978d;
+    --subtle:          #6a6760;
+    --rule:            #2a2823;
+    --accent:          #8fb4ff;
+    --accent-hover:    #b8ceff;
+    --surface:         #1f1e18;
+    --stack-bg:        #252319;
+    --chip-bg:         #1e1d18;
+    --chip-ink:        #a0998f;
+    --chip-built-bg:   #0e2918;
+    --chip-built-ink:  #5ecf8a;
+    --chip-plan-bg:    #291a07;
+    --chip-plan-ink:   #e0a055;
+    --planned-bg:      #1a1912;
+    --planned-border:  #2e2c24;
+  }
+}
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+  font-size: 18px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+::selection { background: #fff3a0; color: #1a1a1a; }
+@media (prefers-color-scheme: dark) {
+  ::selection { background: #3d3500; color: #ecebe6; }
+}
+
+/* ── Layout ── */
+body > header, main, body > footer {
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
+}
+body > header { padding-top: 4.5rem; }
+main { padding-top: 0; padding-bottom: 2rem; }
+body > footer { padding-bottom: 5rem; }
+
+/* ── Links ── */
+a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 120ms ease, color 120ms ease;
+}
+a:hover { color: var(--accent-hover); border-bottom-color: currentColor; }
+a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 1px;
+}
+
+/* ── Header / intro ── */
+h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.2rem;
+}
+h1 a { color: inherit; text-decoration: none; border-bottom: none; }
+
+.headline {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin: 0 0 1rem;
+}
+
+.status-badge {
+  display: inline-block;
+  font-size: 0.78rem;
+  color: var(--muted);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 0.1em 0.55em;
+  margin-bottom: 1.1rem;
+  white-space: nowrap;
+}
+
+nav.top-nav {
+  margin-bottom: 1.5rem;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+nav.top-nav a {
+  margin-right: 0.85rem;
+  color: var(--muted);
+}
+nav.top-nav a:hover { color: var(--ink); }
+
+.pitch {
+  font-size: 1.05rem;
+  font-weight: 500;
+  margin: 0 0 0.75rem;
+  line-height: 1.5;
+}
+.summary { font-size: 0.97rem; line-height: 1.65; color: var(--muted); margin: 0; }
+
+/* ── Section headings ── */
+section { margin-top: 3.5rem; }
+h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  margin: 0 0 1.1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+/* ── Work entries ── */
+.entry { margin-bottom: 2.25rem; }
+.entry:last-child { margin-bottom: 0; }
+
+.role-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.25rem;
+}
+.role-title { font-size: 1rem; }
+.role-title strong { font-weight: 700; }
+
+.chip {
+  display: inline-block;
+  font-size: 0.72rem;
+  background: var(--chip-bg);
+  color: var(--chip-ink);
+  padding: 0.1em 0.45em;
+  border-radius: 3px;
+  vertical-align: middle;
+  margin-left: 0.3em;
+  border: 1px solid var(--rule);
+}
+
+.when {
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.domain {
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-style: italic;
+  margin: 0 0 0.55rem;
+}
+
+ul.bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0.55rem;
+}
+ul.bullets li {
+  position: relative;
+  padding-left: 1.1em;
+  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+ul.bullets li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--subtle);
+}
+
+ul.metrics {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0.4rem;
+}
+ul.metrics li.metric {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+  font-size: 0.95rem;
+  margin-bottom: 0.2rem;
+}
+
+.stack {
+  color: var(--subtle);
+  font-size: 0.78rem;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  margin: 0.35rem 0 0;
+}
+
+/* ── Projects ── */
+h3.proj-group-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--subtle);
+  margin: 0 0 0.75rem;
+}
+.proj-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.9rem;
+  margin-bottom: 1.75rem;
+}
+.proj-card {
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: var(--surface);
+}
+.proj-card.planned {
+  background: var(--planned-bg);
+  border-color: var(--planned-border);
+  border-style: dashed;
+}
+.proj-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+  flex-wrap: wrap;
+}
+.proj-name { font-weight: 700; font-size: 0.97rem; }
+.status-chip {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: lowercase;
+  border-radius: 3px;
+  padding: 0.15em 0.5em;
+  flex-shrink: 0;
+}
+.status-chip.built {
+  background: var(--chip-built-bg);
+  color: var(--chip-built-ink);
+}
+.status-chip.planned {
+  background: var(--chip-plan-bg);
+  color: var(--chip-plan-ink);
+}
+.proj-tagline {
+  font-size: 0.88rem;
+  color: var(--muted);
+  font-style: italic;
+  margin: 0 0 0.3rem;
+}
+.proj-desc {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  margin: 0 0 0.35rem;
+}
+.proj-tech {
+  font-size: 0.75rem;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color: var(--subtle);
+  margin: 0 0 0.3rem;
+}
+.proj-links { font-size: 0.85rem; margin: 0; }
+.proj-link { margin-right: 0.65rem; }
+.proj-link:last-child { margin-right: 0; }
+
+/* ── Toolbox / Skills ── */
+dl.toolbox { margin: 0; }
+.toolbox .row {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 0.45rem;
+  font-size: 0.93rem;
+  flex-wrap: wrap;
+}
+.toolbox dt {
+  font-weight: 700;
+  white-space: nowrap;
+  display: inline;
+  margin: 0;
+}
+.toolbox dd {
+  color: var(--muted);
+  margin: 0;
+  display: inline;
+}
+
+/* ── Education ── */
+.edu-entry { margin-bottom: 1rem; }
+.edu-entry:last-child { margin-bottom: 0; }
+.edu-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.edu-note {
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-style: italic;
+  margin: 0.1rem 0 0;
+}
+
+/* ── Footer ── */
+body > footer {
+  margin-top: 3.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.75rem;
+  margin-bottom: 0.75rem;
+}
+.footer-row a { color: var(--muted); }
+.footer-row a:hover { color: var(--ink); }
+.cv-callout { font-size: 0.88rem; margin: 0; }
+
+/* ── Skip link ── */
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.5rem 1rem;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border-radius: 0 0 4px 0;
+  transform: translateY(-100%);
+  transition: transform 120ms ease;
+  z-index: 9999;
+  border-bottom: none;
+}
+.skip-link:focus { transform: translateY(0); }
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  body > header, main, body > footer {
+    padding-left: 1.2rem;
+    padding-right: 1.2rem;
+  }
+  body > header { padding-top: 2.5rem; }
+  h1 { font-size: 1.4rem; }
+  .status-badge { white-space: normal; }
+}
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header role="banner">
+  <h1><a href="/">Thanh Trung Nguyen (Michal)</a></h1>
+  <p class="headline">QA Automation Engineer — Playwright/TypeScript, full-stack test automation</p>
+  <span class="status-badge">Independent contractor (IČO) — open to contract or permanent</span>
+
+  <nav class="top-nav" aria-label="Page sections">
+    <a href="#work">work</a>
+    
+    <a href="#toolbox">toolbox</a>
+    <a href="#education">education</a>
+    <a href="cv.html">cv</a>
+    <a href="cv.pdf">cv.pdf</a>
+  </nav>
+
+  <p class="pitch">Full-stack test automation — UI, APIs, and data — built with Playwright and TypeScript.</p>
+  <p class="summary">QA / test automation engineer with ~9 years across e-commerce, corporate travel, and regulated gaming. I build full-stack test automation with Playwright and TypeScript — covering UI, REST APIs, and databases — and bring performance and messaging-based testing (k6, Kafka, Azure Service Bus) to systems that need it. I build the QA tooling and dashboards a team needs rather than waiting for them.</p>
+</header>
+
+<main id="main-content">
+
+  <section id="work" aria-labelledby="work-heading">
+    <h2 id="work-heading">Work</h2>
+    <article class="entry">
+  <div class="role-line">
+    <span class="role-title"><strong>Košík.cz</strong> — QA Engineer <span class="chip">contract</span></span>
+    <span class="when">08/2024 – present</span>
+  </div>
+  <p class="domain">Czech online-grocery e-commerce — testing the CRM area across a hybrid microservices + monolith architecture.</p><ul class="bullets"><li>Test the CRM area of the platform end to end — UI flows, REST APIs (Postman, k6), and databases (MySQL, MongoDB, PostgreSQL).</li>
+<li>Author and maintain Playwright (TypeScript) and k6 suites, validate asynchronous flows over Azure Service Bus, and build test-data migrations for test environments.</li></ul><p class="stack">Playwright (TypeScript) · k6 · Postman · MySQL · MongoDB · PostgreSQL · Azure Service Bus</p></article>
+
+<article class="entry">
+  <div class="role-line">
+    <span class="role-title"><strong>Cleevio</strong> — QA Tester <span class="chip">contract</span></span>
+    <span class="when">05/2021 – 12/2023</span>
+  </div>
+  <p class="domain">Corporate-travel compliance application (admin + client web apps).</p><ul class="bullets"><li>Tested admin and client web apps end to end via REST (Postman), MySQL / PostgreSQL (DBeaver), Docker / Kubernetes (Lens), and Sentry.</li>
+<li>Built automation in WebdriverIO (TypeScript) and load tests in k6.</li>
+<li>Owned a local test environment and test server, managed the mobile test-device fleet, and acted as Jira admin for QA across projects.</li></ul><p class="stack">WebdriverIO, Cypress (TypeScript) · Gherkin · k6 · Postman · MySQL · PostgreSQL · Docker · Kubernetes · Sentry · GitLab</p></article>
+
+<article class="entry">
+  <div class="role-line">
+    <span class="role-title"><strong>Techona</strong> — QA Engineer</span>
+    <span class="when">09/2018 – 02/2020</span>
+  </div>
+  <p class="domain">Back-office accounting / data-aggregation tool for the online-gaming industry.</p><ul class="bullets"><li>Tested how data flows through the system and database, plus background jobs and other backend processes.</li>
+<li>Ran functional, integration, regression, and production sanity testing; wrote functional and UAT scenarios.</li></ul><p class="stack">Apache Kafka · JMeter · Swagger · Postman · PostgreSQL · Gherkin · Xray · Nutanix · Bitbucket</p></article>
+
+<article class="entry">
+  <div class="role-line">
+    <span class="role-title"><strong>Apollo Games</strong> — Tester</span>
+    <span class="when">03/2017 – 06/2018</span>
+  </div>
+  <p class="domain">Regulated gaming — terminals and web integrations.</p><ul class="bullets"><li>Prepared and tested products for GLI certification, Romanian gaming legislation, and the B3 certificate.</li>
+<li>Ran UAT, manual, and mobile-device testing; managed the test-device fleet.</li></ul><p class="stack">Jira · TeamCity</p></article>
+  </section>
+
+  
+
+  <section id="toolbox" aria-labelledby="toolbox-heading">
+    <h2 id="toolbox-heading">Toolbox</h2>
+    <dl class="toolbox">
+      <div class="row"><dt>Test automation:</dt><dd>Playwright (TypeScript), Cypress, WebdriverIO, Mocha, k6</dd></div>
+<div class="row"><dt>API testing:</dt><dd>Postman, REST, Swagger / OpenAPI</dd></div>
+<div class="row"><dt>Performance:</dt><dd>k6, JMeter</dd></div>
+<div class="row"><dt>Messaging / event-driven:</dt><dd>Apache Kafka, Azure Service Bus</dd></div>
+<div class="row"><dt>Databases:</dt><dd>PostgreSQL, MySQL, MongoDB</dd></div>
+<div class="row"><dt>CI/CD:</dt><dd>GitHub Actions, GitLab CI</dd></div>
+<div class="row"><dt>Infra / tooling:</dt><dd>Git, Docker, Kubernetes, Jira, Confluence, Xray, Sentry, DBeaver</dd></div>
+<div class="row"><dt>AI tooling:</dt><dd>Claude Code, Cursor</dd></div>
+<div class="row"><dt>Languages (code):</dt><dd>TypeScript / JavaScript, Python, SQL</dd></div>
+<div class="row"><dt>Methodologies:</dt><dd>shift-left, BDD / Gherkin, test pyramid, Agile / Scrum</dd></div>
+<div class="row"><dt>OS:</dt><dd>macOS, Linux</dd></div>
+<div class="row"><dt>Languages:</dt><dd>Czech (Native), English (Fluent, professional working)</dd></div>
+<div class="row"><dt>Interests:</dt><dd>Investments &amp; financial markets, emerging tech, esports &amp; gaming</dd></div>
+    </dl>
+  </section>
+
+  <section id="education" aria-labelledby="education-heading">
+    <h2 id="education-heading">Education</h2>
+    <div class="edu-entry">
+  <div class="edu-line">
+    <span><strong>ČVUT v Praze — Faculty of Mechanical Engineering</strong> — Mechanical Engineering</span>
+    <span class="when">2013–2017</span>
+  </div>
+  <p class="edu-note">Did not complete — left to work.</p></div>
+<div class="edu-entry">
+  <div class="edu-line">
+    <span><strong>Střední průmyslová škola Třebíč</strong> — Technical Lyceum</span>
+    <span class="when">2009–2013</span>
+  </div>
+  </div>
+  </section>
+
+</main>
+
+<footer role="contentinfo">
+  <div class="footer-row">
+    <span><a href="mailto:michal.trung@gmail.com">michal.trung@gmail.com</a></span>
+    <span><a href="https://www.linkedin.com/in/trung-nguyencz" rel="noopener">LinkedIn</a></span>
+    <span><a href="https://github.com/michitrung" rel="noopener">GitHub</a></span>
+    <span><a href="https://tnguyen.cz" rel="noopener">https://tnguyen.cz</a></span>
+  </div>
+  <p class="cv-callout">Full CV: <a href="cv.html">cv.html</a> &middot; <a href="cv.pdf">cv.pdf</a></p>
+</footer>
+
+</body>
+</html>

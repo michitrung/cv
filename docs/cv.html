@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Thanh Trung Nguyen (Michal) — CV</title>
+<style>
+/* ── Screen base ── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0; padding: 0;
+  background: #fff;
+  color: #111;
+  font-family: Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+  font-size: 11pt;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: #1a3d80;
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+a:focus-visible {
+  outline: 2px solid #2a5db0;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ── Screen layout ── */
+.cv-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2.5rem 2.5rem 3rem;
+}
+
+/* ── Print button (screen only) ── */
+.print-bar {
+  text-align: right;
+  margin-bottom: 1.25rem;
+}
+.print-btn {
+  font-family: inherit;
+  font-size: 0.82rem;
+  background: #f5f4f0;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 0.35em 0.9em;
+  cursor: pointer;
+  transition: background 100ms;
+}
+.print-btn:hover { background: #eae8e2; }
+
+/* ── CV Header ── */
+.cv-name {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.2rem;
+}
+.cv-contact {
+  font-size: 0.86rem;
+  color: #555;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.1rem;
+  margin: 0 0 1.1rem;
+}
+.cv-contact a { color: #1a3d80; }
+
+/* ── Section headings ── */
+h2.cv-section {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #666;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.2rem;
+  margin: 0.55rem 0 0.4rem;
+}
+
+/* ── Summary ── */
+.cv-summary {
+  font-size: 0.95rem;
+  line-height: 1.42;
+  margin: 0 0 0.35rem;
+}
+
+/* ── Experience entries ── */
+.cv-entry { margin-bottom: 0.38rem; page-break-inside: avoid; }
+.cv-entry:last-child { margin-bottom: 0; }
+
+.cv-entry-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.cv-company { font-size: 0.97rem; }
+.cv-company strong { font-weight: 700; }
+
+.cv-when {
+  font-size: 0.82rem;
+  color: #555;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.cv-role {
+  font-size: 0.9rem;
+  color: #444;
+  margin-bottom: 0.2rem;
+}
+
+.cv-domain {
+  font-size: 0.85rem;
+  color: #555;
+  font-style: italic;
+  margin: 0 0 0.25rem;
+}
+
+/* ── Bullets ── */
+ul.cv-bullets {
+  list-style: disc;
+  padding-left: 1.3em;
+  margin: 0.2rem 0 0;
+}
+ul.cv-bullets li {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-bottom: 0.15rem;
+}
+
+/* ── Skills table ── */
+.sk-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+.sk-table tr { vertical-align: top; }
+.sk-label {
+  font-weight: 700;
+  white-space: nowrap;
+  padding-right: 0.75rem;
+  padding-bottom: 0.12rem;
+  width: 11.5rem;
+}
+
+/* ── Education ── */
+.cv-edu-note {
+  font-size: 0.83rem;
+  color: #555;
+  font-style: italic;
+  margin: 0.1rem 0 0;
+}
+
+/* ── Print ── */
+@page {
+  size: A4;
+  margin: 1.4cm 1.6cm 1.3cm 1.6cm;
+}
+
+@media print {
+  html, body {
+    font-size: 10pt;
+    background: #fff;
+    color: #000;
+  }
+  .cv-wrap {
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+  .print-bar { display: none; }
+  a { color: #000; text-decoration: none; }
+  .cv-contact a { text-decoration: underline; }
+  h2.cv-section { color: #444; border-color: #999; }
+  .cv-role, .cv-when, .cv-edu-note { color: #444; }
+  .cv-entry { page-break-inside: avoid; }
+}
+
+/* ── Dark mode (screen only) ── */
+@media (prefers-color-scheme: dark) {
+  html, body { background: #15140f; color: #ecebe6; }
+  a { color: #8fb4ff; }
+  h2.cv-section { border-color: #3a3730; color: #9a978d; }
+  .cv-contact { color: #9a978d; }
+  .cv-contact a { color: #8fb4ff; }
+  .cv-when, .cv-role, .cv-domain { color: #9a978d; }
+  .cv-edu-note { color: #7a7870; }
+  .print-btn { background: #1e1d18; border-color: #3a3730; color: #ecebe6; }
+  .print-btn:hover { background: #2a2823; }
+}
+</style>
+</head>
+<body>
+<div class="cv-wrap">
+
+  <div class="print-bar" aria-hidden="true">
+    <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+  </div>
+
+  <header>
+    <h1 class="cv-name">Thanh Trung Nguyen (Michal)</h1>
+    <div class="cv-contact">
+      <span>Praha, Czech Republic</span>
+    <span><a href="mailto:michal.trung@gmail.com">michal.trung@gmail.com</a></span>
+    <span><a href="https://www.linkedin.com/in/trung-nguyencz" rel="noopener">www.linkedin.com/in/trung-nguyencz</a></span>
+    <span><a href="https://github.com/michitrung"   rel="noopener">github.com/michitrung</a></span>
+    <span><a href="https://tnguyen.cz"     rel="noopener">tnguyen.cz</a></span>
+    </div>
+  </header>
+
+  <h2 class="cv-section">Summary</h2>
+  <p class="cv-summary">QA / test automation engineer with ~9 years across e-commerce, corporate travel, and regulated gaming. I build full-stack test automation with Playwright and TypeScript — covering UI, REST APIs, and databases — and bring performance and messaging-based testing (k6, Kafka, Azure Service Bus) to systems that need it. I build the QA tooling and dashboards a team needs rather than waiting for them.</p>
+
+  <h2 class="cv-section">Experience</h2>
+  <div class="cv-entry">
+  <div class="cv-entry-head">
+    <span class="cv-company"><strong>Košík.cz</strong></span>
+    <span class="cv-when">08/2024 – present</span>
+  </div>
+  <div class="cv-role">QA Engineer (contract)</div>
+  <ul class="cv-bullets"><li>Test the CRM area of the platform end to end — UI flows, REST APIs (Postman, k6), and databases (MySQL, MongoDB, PostgreSQL).</li>
+<li>Author and maintain Playwright (TypeScript) and k6 suites, validate asynchronous flows over Azure Service Bus, and build test-data migrations for test environments.</li></ul></div>
+<div class="cv-entry">
+  <div class="cv-entry-head">
+    <span class="cv-company"><strong>Cleevio</strong></span>
+    <span class="cv-when">05/2021 – 12/2023</span>
+  </div>
+  <div class="cv-role">QA Tester (contract)</div>
+  <ul class="cv-bullets"><li>Tested admin and client web apps end to end via REST (Postman), MySQL / PostgreSQL (DBeaver), Docker / Kubernetes (Lens), and Sentry.</li>
+<li>Built automation in WebdriverIO (TypeScript) and load tests in k6.</li>
+<li>Owned a local test environment and test server, managed the mobile test-device fleet, and acted as Jira admin for QA across projects.</li></ul></div>
+<div class="cv-entry">
+  <div class="cv-entry-head">
+    <span class="cv-company"><strong>Techona</strong></span>
+    <span class="cv-when">09/2018 – 02/2020</span>
+  </div>
+  <div class="cv-role">QA Engineer</div>
+  <ul class="cv-bullets"><li>Tested how data flows through the system and database, plus background jobs and other backend processes.</li>
+<li>Ran functional, integration, regression, and production sanity testing; wrote functional and UAT scenarios.</li></ul></div>
+<div class="cv-entry">
+  <div class="cv-entry-head">
+    <span class="cv-company"><strong>Apollo Games</strong></span>
+    <span class="cv-when">03/2017 – 06/2018</span>
+  </div>
+  <div class="cv-role">Tester</div>
+  <ul class="cv-bullets"><li>Prepared and tested products for GLI certification, Romanian gaming legislation, and the B3 certificate.</li>
+<li>Ran UAT, manual, and mobile-device testing; managed the test-device fleet.</li></ul></div>
+
+  <h2 class="cv-section">Skills</h2>
+  <table class="sk-table" role="presentation">
+    <tr><td class="sk-label">Test automation</td><td>Playwright (TypeScript), Cypress, WebdriverIO, Mocha, k6</td></tr>
+<tr><td class="sk-label">API testing</td><td>Postman, REST, Swagger / OpenAPI</td></tr>
+<tr><td class="sk-label">Performance</td><td>k6, JMeter</td></tr>
+<tr><td class="sk-label">Messaging / event-driven</td><td>Apache Kafka, Azure Service Bus</td></tr>
+<tr><td class="sk-label">Databases</td><td>PostgreSQL, MySQL, MongoDB</td></tr>
+<tr><td class="sk-label">CI/CD</td><td>GitHub Actions, GitLab CI</td></tr>
+<tr><td class="sk-label">Infra / tooling</td><td>Git, Docker, Kubernetes, Jira, Confluence, Xray, Sentry, DBeaver</td></tr>
+<tr><td class="sk-label">AI tooling</td><td>Claude Code, Cursor</td></tr>
+<tr><td class="sk-label">Languages (code)</td><td>TypeScript / JavaScript, Python, SQL</td></tr>
+<tr><td class="sk-label">Methodologies</td><td>shift-left, BDD / Gherkin, test pyramid, Agile / Scrum</td></tr>
+<tr><td class="sk-label">OS</td><td>macOS, Linux</td></tr>
+<tr><td class="sk-label">Languages</td><td>Czech (Native), English (Fluent, professional working)</td></tr>
+<tr><td class="sk-label">Interests</td><td>Investments &amp; financial markets, emerging tech, esports &amp; gaming</td></tr>
+  </table>
+
+  <h2 class="cv-section">Education</h2>
+  <div class="cv-entry">
+  <div class="cv-entry-head">
+    <span class="cv-company"><strong>ČVUT v Praze — Faculty of Mechanical Engineering</strong></span>
+    <span class="cv-when">2013–2017</span>
+  </div>
+  <div class="cv-role">Mechanical Engineering</div>
+  <p class="cv-edu-note">Did not complete — left to work.</p></div>
+<div class="cv-entry">
+  <div class="cv-entry-head">
+    <span class="cv-company"><strong>Střední průmyslová škola Třebíč</strong></span>
+    <span class="cv-when">2009–2013</span>
+  </div>
+  <div class="cv-role">Technical Lyceum</div>
+  </div>
+
+</div>
+</body>
+</html>

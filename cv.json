@@ -1,0 +1,118 @@
+{
+  "basics": {
+    "name": "Thanh Trung Nguyen",
+    "goesBy": "Michal",
+    "headline": "QA Automation Engineer — Playwright/TypeScript, full-stack test automation",
+    "pitch": "Full-stack test automation — UI, APIs, and data — built with Playwright and TypeScript.",
+    "metaDescription": "Playwright/TypeScript QA engineer — full-stack test automation across UI, APIs, and databases.",
+    "location": "Praha, Czech Republic",
+    "email": "michal.trung@gmail.com",
+    "status": "Independent contractor (IČO) — open to contract or permanent",
+    "profiles": {
+      "linkedin": "https://www.linkedin.com/in/trung-nguyencz",
+      "github": "https://github.com/michitrung",
+      "site": "https://tnguyen.cz"
+    },
+    "summary": "QA / test automation engineer with ~9 years across e-commerce, corporate travel, and regulated gaming. I build full-stack test automation with Playwright and TypeScript — covering UI, REST APIs, and databases — and bring performance and messaging-based testing (k6, Kafka, Azure Service Bus) to systems that need it. I build the QA tooling and dashboards a team needs."
+  },
+  "work": [
+    {
+      "company": "Košík.cz",
+      "role": "QA Engineer",
+      "engagement": "contract",
+      "period": { "start": "2024-08", "end": null, "display": "08/2024 – present" },
+      "domain": "Czech online-grocery e-commerce — testing the CRM area across a hybrid microservices + monolith architecture.",
+      "highlights": [
+        "Test the CRM area of the platform end to end — UI flows, REST APIs (Postman, k6), and databases (MySQL, MongoDB, PostgreSQL).",
+        "Author and maintain Playwright (TypeScript) and k6 suites, validate asynchronous flows over Azure Service Bus, and build test-data migrations for test environments."
+      ],
+      "stack": ["Playwright (TypeScript)", "k6", "Postman", "MySQL", "MongoDB", "PostgreSQL", "Azure Service Bus"],
+      "metrics": []
+    },
+    {
+      "company": "Cleevio",
+      "role": "QA Tester",
+      "engagement": "contract",
+      "period": { "start": "2021-05", "end": "2023-12", "display": "05/2021 – 12/2023" },
+      "domain": "Corporate-travel compliance application (admin + client web apps).",
+      "highlights": [
+        "Tested admin and client web apps end to end via REST (Postman), MySQL / PostgreSQL (DBeaver), Docker / Kubernetes (Lens), and Sentry.",
+        "Built automation in WebdriverIO (TypeScript) and load tests in k6.",
+        "Owned a local test environment and test server, managed the mobile test-device fleet, and acted as Jira admin for QA across projects."
+      ],
+      "stack": ["WebdriverIO, Cypress (TypeScript)", "Gherkin", "k6", "Postman", "MySQL", "PostgreSQL", "Docker", "Kubernetes", "Sentry", "GitLab"],
+      "metrics": []
+    },
+    {
+      "company": "Techona",
+      "role": "QA Engineer",
+      "period": { "start": "2018-09", "end": "2020-02", "display": "09/2018 – 02/2020" },
+      "domain": "Back-office accounting / data-aggregation tool for the online-gaming industry.",
+      "highlights": [
+        "Tested how data flows through the system and database, plus background jobs and other backend processes.",
+        "Ran functional, integration, regression, and production sanity testing; wrote functional and UAT scenarios."
+      ],
+      "stack": ["Apache Kafka", "JMeter", "Swagger", "Postman", "PostgreSQL", "Gherkin", "Xray", "Nutanix", "Bitbucket"],
+      "metrics": []
+    },
+    {
+      "company": "Apollo Games",
+      "role": "Tester",
+      "period": { "start": "2017-03", "end": "2018-06", "display": "03/2017 – 06/2018" },
+      "domain": "Regulated gaming — terminals and web integrations.",
+      "highlights": [
+        "Prepared and tested products for GLI certification, Romanian gaming legislation, and the B3 certificate.",
+        "Ran UAT, manual, and mobile-device testing; managed the test-device fleet."
+      ],
+      "stack": ["Jira", "TeamCity"],
+      "metrics": []
+    }
+  ],
+  "earlier": [
+    {
+      "company": "MANN+HUMMEL Service s.r.o.",
+      "role": "Tester intern, R&D",
+      "period": { "display": "06/2015 – 12/2015" },
+      "note": "Automotive filtration lab — ran tests and collected data during studies."
+    },
+    {
+      "company": "MANN+HUMMEL v.o.s.",
+      "role": "Production worker (seasonal)",
+      "period": { "display": "2008 – 2013" },
+      "note": "Filter-cartridge assembly lines during studies."
+    }
+  ],
+  "skills": [
+    { "group": "Test automation", "items": ["Playwright (TypeScript)", "Cypress", "WebdriverIO", "Mocha", "k6"] },
+    { "group": "API testing", "items": ["Postman", "REST", "Swagger / OpenAPI"] },
+    { "group": "Performance", "items": ["k6", "JMeter"] },
+    { "group": "Messaging / event-driven", "items": ["Apache Kafka", "Azure Service Bus"] },
+    { "group": "Databases", "items": ["PostgreSQL", "MySQL", "MongoDB"] },
+    { "group": "CI/CD", "items": ["GitHub Actions", "GitLab CI"] },
+    { "group": "Infra / tooling", "items": ["Git", "Docker", "Kubernetes", "Jira", "Confluence", "Xray", "Sentry", "DBeaver"] },
+    { "group": "AI tooling", "items": ["Claude Code", "Cursor"] },
+    { "group": "Languages (code)", "items": ["TypeScript / JavaScript", "Python", "SQL"] },
+    { "group": "Methodologies", "items": ["shift-left", "test pyramid", "Agile / Scrum"] },
+    { "group": "OS", "items": ["macOS", "Linux"] }
+  ],
+  "projects": [],
+  "education": [
+    {
+      "institution": "ČVUT v Praze — Faculty of Mechanical Engineering",
+      "area": "Mechanical Engineering",
+      "period": "2013–2017",
+      "note": "Did not complete — left to work."
+    },
+    {
+      "institution": "Střední průmyslová škola Třebíč",
+      "area": "Technical Lyceum",
+      "period": "2009–2013",
+      "note": ""
+    }
+  ],
+  "languages": [
+    { "language": "Czech", "fluency": "Native" },
+    { "language": "English", "fluency": "Fluent, professional working" }
+  ],
+  "interests": ["Investments & financial markets", "emerging tech", "deep tech"]
+}
