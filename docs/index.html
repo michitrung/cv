@@ -11,7 +11,7 @@
   --bg:              #fefefc;
   --ink:             #1a1a1a;
   --muted:           #6b6b6b;
-  --subtle:          #767370;
+  --subtle:          #6b6b6b;
   --rule:            #e5e3dc;
   --accent:          #2a5db0;
   --accent-hover:    #1a3d80;
@@ -31,7 +31,7 @@
     --bg:              #15140f;
     --ink:             #ecebe6;
     --muted:           #9a978d;
-    --subtle:          #6a6760;
+    --subtle:          #9a978d;
     --rule:            #2a2823;
     --accent:          #8fb4ff;
     --accent-hover:    #b8ceff;
@@ -134,7 +134,7 @@ nav.top-nav a:hover { color: var(--ink); }
   margin: 0 0 0.75rem;
   line-height: 1.5;
 }
-.summary { font-size: 0.97rem; line-height: 1.65; color: var(--muted); margin: 0; }
+.summary { font-size: 0.97rem; line-height: 1.65; color: var(--ink); margin: 0; }
 
 /* ── Section headings ── */
 section { margin-top: 3.5rem; }
@@ -317,7 +317,7 @@ dl.toolbox { margin: 0; }
   margin: 0;
 }
 .toolbox dd {
-  color: var(--muted);
+  color: var(--ink);
   margin: 0;
   display: inline;
 }
@@ -398,15 +398,15 @@ body > footer {
 
   <nav class="top-nav" aria-label="Page sections">
     <a href="#work">work</a>
+    <a href="#projects">projects</a>
     
     <a href="#toolbox">toolbox</a>
     <a href="#education">education</a>
-    <a href="cv.html">cv</a>
-    <a href="cv.pdf">cv.pdf</a>
+    <a href="Thanh-Trung-Nguyen-QA-Automation-Engineer-CV.pdf">cv</a>
   </nav>
 
   <p class="pitch">Full-stack test automation — UI, APIs, and data — built with Playwright and TypeScript.</p>
-  <p class="summary">QA / test automation engineer with ~9 years across e-commerce, corporate travel, and regulated gaming. I build full-stack test automation with Playwright and TypeScript — covering UI, REST APIs, and databases — and bring performance and messaging-based testing (k6, Kafka, Azure Service Bus) to systems that need it. I build the QA tooling and dashboards a team needs rather than waiting for them.</p>
+  <p class="summary">QA / test automation engineer with ~9 years across e-commerce, corporate travel, and regulated gaming. I build full-stack test automation with Playwright and TypeScript — covering UI, REST APIs, and databases — and bring performance and messaging-based testing (k6, Kafka, Azure Service Bus) to systems that need it. I build the QA tooling and dashboards a team needs.</p>
 </header>
 
 <main id="main-content">
@@ -447,7 +447,18 @@ body > footer {
 <li>Ran UAT, manual, and mobile-device testing; managed the test-device fleet.</li></ul><p class="stack">Jira · TeamCity</p></article>
   </section>
 
-  
+  <section id="projects" aria-labelledby="projects-heading">
+    <h2 id="projects-heading">Projects</h2>
+    <h3 class="proj-group-label">Shipped</h3>
+<div class="proj-grid">
+<article class="proj-card">
+  <div class="proj-header">
+    <span class="proj-name">YouTube Watch Later</span>
+    <span class="status-chip built">built</span>
+  </div>
+  <p class="proj-tagline">Pull, categorize, and cull YouTube Watch Later playlist — watch inline, delete on the spot.</p><p class="proj-desc">A single-file local tool that pulls my un-API-able Watch Later, LLM-categorizes every video, and lets me filter by topic / year / length, watch in an embedded player, and remove on the spot (with undo). Built with Claude Code.</p><p class="proj-tech">Python · yt-dlp · JavaScript · LLM · Claude Code</p></article>
+</div>
+  </section>
 
   <section id="toolbox" aria-labelledby="toolbox-heading">
     <h2 id="toolbox-heading">Toolbox</h2>
@@ -461,10 +472,10 @@ body > footer {
 <div class="row"><dt>Infra / tooling:</dt><dd>Git, Docker, Kubernetes, Jira, Confluence, Xray, Sentry, DBeaver</dd></div>
 <div class="row"><dt>AI tooling:</dt><dd>Claude Code, Cursor</dd></div>
 <div class="row"><dt>Languages (code):</dt><dd>TypeScript / JavaScript, Python, SQL</dd></div>
-<div class="row"><dt>Methodologies:</dt><dd>shift-left, BDD / Gherkin, test pyramid, Agile / Scrum</dd></div>
+<div class="row"><dt>Methodologies:</dt><dd>shift-left, test pyramid, Agile / Scrum</dd></div>
 <div class="row"><dt>OS:</dt><dd>macOS, Linux</dd></div>
 <div class="row"><dt>Languages:</dt><dd>Czech (Native), English (Fluent, professional working)</dd></div>
-<div class="row"><dt>Interests:</dt><dd>Investments &amp; financial markets, emerging tech, esports &amp; gaming</dd></div>
+<div class="row"><dt>Interests:</dt><dd>Investments &amp; financial markets, emerging tech, deep tech</dd></div>
     </dl>
   </section>
 
@@ -493,7 +504,7 @@ body > footer {
     <span><a href="https://github.com/michitrung" rel="noopener">GitHub</a></span>
     <span><a href="https://tnguyen.cz" rel="noopener">https://tnguyen.cz</a></span>
   </div>
-  <p class="cv-callout">Full CV: <a href="cv.html">cv.html</a> &middot; <a href="cv.pdf">cv.pdf</a></p>
+  <p class="cv-callout"><a href="Thanh-Trung-Nguyen-QA-Automation-Engineer-CV.pdf">Download CV (PDF)</a></p>
 </footer>
 
 </body>

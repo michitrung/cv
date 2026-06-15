@@ -18,18 +18,18 @@ Writes `docs/index.html` (portfolio), `docs/cv.html` (CV), and `docs/CNAME`.
 
 Open `docs/index.html` in any browser — no server needed, all assets are inlined.
 
-## Export the PDF (`docs/cv.pdf`)
+## Export the PDF (`docs/Thanh-Trung-Nguyen-QA-Automation-Engineer-CV.pdf`)
 
 The PDF is a committed snapshot. Regenerate it whenever the CV content changes:
 
-- Open `docs/cv.html`, click **Print / Save as PDF**, and save over `docs/cv.pdf`.
+- Open `docs/cv.html`, click **Print / Save as PDF**, and save over `docs/Thanh-Trung-Nguyen-QA-Automation-Engineer-CV.pdf`.
 
 Or headless from the terminal (macOS):
 
 ```
 "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
   --headless=new --no-pdf-header-footer \
-  --print-to-pdf="docs/cv.pdf" "file://$PWD/docs/cv.html"
+  --print-to-pdf="docs/Thanh-Trung-Nguyen-QA-Automation-Engineer-CV.pdf" "file://$PWD/docs/cv.html"
 ```
 
 ## Add metrics later
@@ -56,7 +56,7 @@ git push        # GitHub Actions runs `node build.mjs` and deploys — no manual
 to the custom domain in `docs/CNAME` (tnguyen.cz). Pages **Source** must be set to
 **GitHub Actions** (Settings → Pages).
 
-`docs/cv.pdf` is a committed asset — CI does **not** regenerate it. Refresh it only when
-the **CV text** changes: open `docs/cv.html` → Print → Save as PDF over `docs/cv.pdf`, then commit.
+`docs/Thanh-Trung-Nguyen-QA-Automation-Engineer-CV.pdf` is a committed asset — CI does **not** regenerate it. Refresh it only when
+the **CV text** changes: open `docs/cv.html` → Print → Save as PDF over `docs/Thanh-Trung-Nguyen-QA-Automation-Engineer-CV.pdf`, then commit.
 
 Run `node build.mjs` locally only if you want to preview before pushing.
