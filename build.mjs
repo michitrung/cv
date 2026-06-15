@@ -183,6 +183,11 @@ const fullName = goesBy && goesBy !== name ? `${name} (${goesBy})` : name;
 
 const posts = loadPosts();
 
+// Descriptive filename for the downloaded CV PDF (derived from cv.json so it stays in sync).
+const slugify = v => String(v || '').replace(/[^A-Za-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+const cvRole = (headline.split(' — ')[0] || 'CV').trim();
+const cvDownloadName = `${slugify(name)}-${slugify(cvRole)}-CV.pdf`;
+
 /** Tip-jar links (Ko-fi / GitHub Sponsors) from basics.support; '' if none set. */
 function tipJar() {
   const s = (basics && basics.support) || {};
@@ -722,7 +727,7 @@ body > footer {
     <a href="#toolbox">toolbox</a>
     <a href="#education">education</a>
     <a href="cv.html">cv</a>
-    <a href="cv.pdf">cv.pdf</a>
+    <a href="cv.pdf" download="${cvDownloadName}">cv.pdf</a>
   </nav>
 
   ${pitch   ? `<p class="pitch">${esc(pitch)}</p>` : ''}
@@ -756,7 +761,7 @@ body > footer {
   <div class="footer-row">
     ${footerLinks}
   </div>
-  <p class="cv-callout">Full CV: <a href="cv.html">cv.html</a> &middot; <a href="cv.pdf">cv.pdf</a></p>
+  <p class="cv-callout">Full CV: <a href="cv.html">cv.html</a> &middot; <a href="cv.pdf" download="${cvDownloadName}">cv.pdf</a></p>
 </footer>
 
 </body>
