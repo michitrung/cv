@@ -101,7 +101,7 @@
   ],
   "projects": [
     {
-      "name": "Watch Later Tamer",
+      "name": "YouTube Watch Later",
       "status": "built",
       "tagline": "Pull, categorize, and cull YouTube Watch Later playlist — watch inline, delete on the spot.",
       "description": "A single-file local tool that pulls my un-API-able Watch Later, LLM-categorizes every video, and lets me filter by topic / year / length, watch in an embedded player, and remove on the spot (with undo). Built with Claude Code.",
