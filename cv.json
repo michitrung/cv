@@ -103,7 +103,7 @@
     {
       "name": "Watch Later Tamer",
       "status": "built",
-      "tagline": "Pull, categorize, and cull a 2,455-video YouTube Watch Later — watch inline, delete on the spot.",
+      "tagline": "Pull, categorize, and cull YouTube Watch Later playlist — watch inline, delete on the spot.",
       "description": "A single-file local tool that pulls my un-API-able Watch Later, LLM-categorizes every video, and lets me filter by topic / year / length, watch in an embedded player, and remove on the spot (with undo). Built with Claude Code.",
       "tech": ["Python", "yt-dlp", "JavaScript", "LLM", "Claude Code"],
       "links": {

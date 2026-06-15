@@ -330,7 +330,7 @@ function buildIndex() {
   --bg:              #fefefc;
   --ink:             #1a1a1a;
   --muted:           #6b6b6b;
-  --subtle:          #767370;
+  --subtle:          #6b6b6b;
   --rule:            #e5e3dc;
   --accent:          #2a5db0;
   --accent-hover:    #1a3d80;
@@ -350,7 +350,7 @@ function buildIndex() {
     --bg:              #15140f;
     --ink:             #ecebe6;
     --muted:           #9a978d;
-    --subtle:          #6a6760;
+    --subtle:          #9a978d;
     --rule:            #2a2823;
     --accent:          #8fb4ff;
     --accent-hover:    #b8ceff;
@@ -453,7 +453,7 @@ nav.top-nav a:hover { color: var(--ink); }
   margin: 0 0 0.75rem;
   line-height: 1.5;
 }
-.summary { font-size: 0.97rem; line-height: 1.65; color: var(--muted); margin: 0; }
+.summary { font-size: 0.97rem; line-height: 1.65; color: var(--ink); margin: 0; }
 
 /* ── Section headings ── */
 section { margin-top: 3.5rem; }
@@ -636,7 +636,7 @@ dl.toolbox { margin: 0; }
   margin: 0;
 }
 .toolbox dd {
-  color: var(--muted);
+  color: var(--ink);
   margin: 0;
   display: inline;
 }
@@ -1067,9 +1067,9 @@ ul.cv-bullets li {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 const WRITING_CSS = `
-:root{--bg:#fefefc;--ink:#1a1a1a;--muted:#6b6b6b;--subtle:#767370;--rule:#e5e3dc;
+:root{--bg:#fefefc;--ink:#1a1a1a;--muted:#6b6b6b;--subtle:#6b6b6b;--rule:#e5e3dc;
   --accent:#2a5db0;--accent-hover:#1a3d80;--surface:#f5f4f0;--code-bg:#f0eee8}
-@media (prefers-color-scheme:dark){:root{--bg:#15140f;--ink:#ecebe6;--muted:#9a978d;--subtle:#6a6760;
+@media (prefers-color-scheme:dark){:root{--bg:#15140f;--ink:#ecebe6;--muted:#9a978d;--subtle:#9a978d;
   --rule:#2a2823;--accent:#8fb4ff;--accent-hover:#b8ceff;--surface:#1f1e18;--code-bg:#222018}}
 *,*::before,*::after{box-sizing:border-box}
 html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
