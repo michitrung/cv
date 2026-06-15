@@ -761,7 +761,7 @@ body > footer {
   <div class="footer-row">
     ${footerLinks}
   </div>
-  <p class="cv-callout">Full CV: <a href="cv.html">cv.html</a> &middot; <a href="cv.pdf" download="${cvDownloadName}">cv.pdf</a></p>
+  <p class="cv-callout">Full CV: <a href="cv.pdf" download="${cvDownloadName}">cv.pdf</a></p>
 </footer>
 
 </body>
