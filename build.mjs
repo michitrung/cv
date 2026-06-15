@@ -3,7 +3,7 @@
 // Reads ./cv.json (resolved relative to this file via import.meta.url).
 // Writes ./dist/index.html and ./dist/cv.html (fully self-contained, no fetch).
 
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -49,6 +49,108 @@ function period(p) {
   return s ? `${s} – ${e}` : '';
 }
 
+/** Format an ISO date (YYYY-MM-DD) as "15 June 2026"; passthrough on failure. */
+function fmtDate(d) {
+  if (!d) return '';
+  const dt = new Date(`${d}T00:00:00`);
+  if (isNaN(dt.getTime())) return esc(d);
+  return dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+// ── Markdown (tiny, zero-dep subset: headings, lists, code, quotes, links, emphasis) ──
+
+/** Split `---` front-matter off a Markdown string. Returns { meta, body }. */
+function parseFrontmatter(raw) {
+  const m = raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
+  if (!m) return { meta: {}, body: raw };
+  const meta = {};
+  for (const line of m[1].split('\n')) {
+    const kv = line.match(/^(\w+):\s*(.*)$/);
+    if (!kv) continue;
+    const key = kv[1];
+    let val = kv[2].trim();
+    if (/^\[.*\]$/.test(val)) {
+      meta[key] = val.slice(1, -1).split(',').map(s => s.trim().replace(/^["']|["']$/g, '')).filter(Boolean);
+    } else {
+      meta[key] = val.replace(/^["']|["']$/g, '');
+    }
+  }
+  return { meta, body: m[2] };
+}
+
+/** Render inline Markdown (code, images, links, bold, italic) with HTML escaping. */
+function mdInline(s) {
+  // Neutralize dangerous URL schemes (javascript:, data:, vbscript:) in links/images.
+  const safeUrl = u => /^\s*(javascript|data|vbscript):/i.test(u) ? '#' : u;
+  const codes = [];
+  s = s.replace(/`([^`]+)`/g, (_, c) => { codes.push(c); return `[[[${codes.length - 1}]]]`; });
+  s = esc(s);
+  s = s.replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, (_, a, src) => `<img alt="${a}" src="${safeUrl(src)}" loading="lazy" />`);
+  s = s.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_, t, u) => `<a href="${safeUrl(u)}" rel="noopener">${t}</a>`);
+  s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  s = s.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+  s = s.replace(/\[\[\[(\d+)\]\]\]/g, (_, i) => `<code>${esc(codes[+i])}</code>`);
+  return s;
+}
+
+/** Render a Markdown body to HTML (block-level), delegating inline spans to mdInline. */
+function mdToHtml(md) {
+  const lines = md.replace(/\r\n/g, '\n').split('\n');
+  const out = [];
+  const isBlockStart = l => /^(#{1,4}\s|```|>\s?|[-*]\s+|\d+\.\s+|(\*\*\*|---|___)\s*$)/.test(l);
+  let i = 0;
+  while (i < lines.length) {
+    const line = lines[i];
+    if (/^```/.test(line)) {
+      const buf = []; i++;
+      while (i < lines.length && !/^```/.test(lines[i])) { buf.push(lines[i]); i++; }
+      i++;
+      out.push(`<pre><code>${esc(buf.join('\n'))}</code></pre>`);
+      continue;
+    }
+    if (/^\s*$/.test(line)) { i++; continue; }
+    const h = line.match(/^(#{1,4})\s+(.*)$/);
+    if (h) { out.push(`<h${h[1].length}>${mdInline(h[2].trim())}</h${h[1].length}>`); i++; continue; }
+    if (/^(\*\*\*|---|___)\s*$/.test(line)) { out.push('<hr />'); i++; continue; }
+    if (/^>\s?/.test(line)) {
+      const buf = [];
+      while (i < lines.length && /^>\s?/.test(lines[i])) { buf.push(lines[i].replace(/^>\s?/, '')); i++; }
+      out.push(`<blockquote>${mdInline(buf.join(' '))}</blockquote>`);
+      continue;
+    }
+    if (/^[-*]\s+/.test(line)) {
+      const buf = [];
+      while (i < lines.length && /^[-*]\s+/.test(lines[i])) { buf.push(`<li>${mdInline(lines[i].replace(/^[-*]\s+/, ''))}</li>`); i++; }
+      out.push(`<ul>${buf.join('')}</ul>`);
+      continue;
+    }
+    if (/^\d+\.\s+/.test(line)) {
+      const buf = [];
+      while (i < lines.length && /^\d+\.\s+/.test(lines[i])) { buf.push(`<li>${mdInline(lines[i].replace(/^\d+\.\s+/, ''))}</li>`); i++; }
+      out.push(`<ol>${buf.join('')}</ol>`);
+      continue;
+    }
+    const buf = [line]; i++;
+    while (i < lines.length && !/^\s*$/.test(lines[i]) && !isBlockStart(lines[i])) { buf.push(lines[i]); i++; }
+    out.push(`<p>${mdInline(buf.join(' '))}</p>`);
+  }
+  return out.join('\n');
+}
+
+/** Load posts/*.md, newest first. Each post: { ...frontmatter, slug, body }. */
+function loadPosts() {
+  let files = [];
+  try { files = readdirSync(join(__dir, 'posts')).filter(f => f.endsWith('.md')); }
+  catch { return []; }
+  return files
+    .map(f => {
+      const { meta, body } = parseFrontmatter(readFileSync(join(__dir, 'posts', f), 'utf8'));
+      return { ...meta, slug: meta.slug || f.replace(/\.md$/, ''), body };
+    })
+    .filter(p => p.title)
+    .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
+}
+
 // ── Data ───────────────────────────────────────────────────────────────────────
 
 const {
@@ -78,6 +180,24 @@ const {
 
 // Full formal name for site headings/titles, e.g. "Thanh Trung Nguyen (Michal)".
 const fullName = goesBy && goesBy !== name ? `${name} (${goesBy})` : name;
+
+const posts = loadPosts();
+
+// Descriptive filename for the downloaded CV PDF (derived from cv.json so it stays in sync).
+const slugify = v => String(v || '').replace(/[^A-Za-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+const cvRole = (headline.split(' — ')[0] || 'CV').trim();
+const cvDownloadName = `${slugify(name)}-${slugify(cvRole)}-CV.pdf`;
+
+/** Tip-jar links (Ko-fi / GitHub Sponsors) from basics.support; '' if none set. */
+function tipJar() {
+  const s = (basics && basics.support) || {};
+  const parts = [
+    s.kofi           ? `<a href="${esc(s.kofi)}" rel="noopener">buy me a coffee</a>` : '',
+    s.githubSponsors ? `<a href="${esc(s.githubSponsors)}" rel="noopener">sponsor me on GitHub</a>` : '',
+  ].filter(Boolean);
+  if (!parts.length) return '';
+  return `<div class="tipjar"><p>Found this useful? You can ${parts.join(' or ')} — it keeps me building (and tinkering) in the open.</p></div>`;
+}
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // PAGE 1 — dist/index.html (Portfolio)
@@ -129,6 +249,7 @@ function buildProjectCard(p, isPlanned) {
 
   const links = p.links || {};
   const linkParts = [
+    links.post ? `<a href="${esc(links.post)}" class="proj-link">write-up ↗</a>` : '',
     links.repo ? `<a href="${esc(links.repo)}" class="proj-link" rel="noopener">repo ↗</a>` : '',
     links.demo ? `<a href="${esc(links.demo)}" class="proj-link" rel="noopener">demo ↗</a>` : '',
   ].filter(Boolean);
@@ -214,7 +335,7 @@ function buildIndex() {
   --bg:              #fefefc;
   --ink:             #1a1a1a;
   --muted:           #6b6b6b;
-  --subtle:          #767370;
+  --subtle:          #6b6b6b;
   --rule:            #e5e3dc;
   --accent:          #2a5db0;
   --accent-hover:    #1a3d80;
@@ -234,7 +355,7 @@ function buildIndex() {
     --bg:              #15140f;
     --ink:             #ecebe6;
     --muted:           #9a978d;
-    --subtle:          #6a6760;
+    --subtle:          #9a978d;
     --rule:            #2a2823;
     --accent:          #8fb4ff;
     --accent-hover:    #b8ceff;
@@ -337,7 +458,7 @@ nav.top-nav a:hover { color: var(--ink); }
   margin: 0 0 0.75rem;
   line-height: 1.5;
 }
-.summary { font-size: 0.97rem; line-height: 1.65; color: var(--muted); margin: 0; }
+.summary { font-size: 0.97rem; line-height: 1.65; color: var(--ink); margin: 0; }
 
 /* ── Section headings ── */
 section { margin-top: 3.5rem; }
@@ -520,7 +641,7 @@ dl.toolbox { margin: 0; }
   margin: 0;
 }
 .toolbox dd {
-  color: var(--muted);
+  color: var(--ink);
   margin: 0;
   display: inline;
 }
@@ -602,10 +723,11 @@ body > footer {
   <nav class="top-nav" aria-label="Page sections">
     <a href="#work">work</a>
     ${projectsHtml ? '<a href="#projects">projects</a>' : ''}
+    ${posts.length ? '<a href="writing.html">writing</a>' : ''}
     <a href="#toolbox">toolbox</a>
     <a href="#education">education</a>
     <a href="cv.html">cv</a>
-    <a href="cv.pdf">cv.pdf</a>
+    <a href="cv.pdf" download="${cvDownloadName}">cv.pdf</a>
   </nav>
 
   ${pitch   ? `<p class="pitch">${esc(pitch)}</p>` : ''}
@@ -639,7 +761,7 @@ body > footer {
   <div class="footer-row">
     ${footerLinks}
   </div>
-  <p class="cv-callout">Full CV: <a href="cv.html">cv.html</a> &middot; <a href="cv.pdf">cv.pdf</a></p>
+  <p class="cv-callout">Full CV: <a href="cv.html">cv.html</a> &middot; <a href="cv.pdf" download="${cvDownloadName}">cv.pdf</a></p>
 </footer>
 
 </body>
@@ -945,13 +1067,130 @@ ul.cv-bullets li {
 </html>`;
 }
 
+// ═══════════════════════════════════════════════════════════════════════════════
+// PAGE 3 — writing.html (index) + one page per post (flat, file://-previewable)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+const WRITING_CSS = `
+:root{--bg:#fefefc;--ink:#1a1a1a;--muted:#6b6b6b;--subtle:#6b6b6b;--rule:#e5e3dc;
+  --accent:#2a5db0;--accent-hover:#1a3d80;--surface:#f5f4f0;--code-bg:#f0eee8}
+@media (prefers-color-scheme:dark){:root{--bg:#15140f;--ink:#ecebe6;--muted:#9a978d;--subtle:#9a978d;
+  --rule:#2a2823;--accent:#8fb4ff;--accent-hover:#b8ceff;--surface:#1f1e18;--code-bg:#222018}}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+  font-family:Charter,"Bitstream Charter","Sitka Text",Cambria,Georgia,serif;font-size:18px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+::selection{background:#fff3a0;color:#1a1a1a}
+@media (prefers-color-scheme:dark){::selection{background:#3d3500;color:#ecebe6}}
+.wrap{max-width:680px;margin:0 auto;padding:3.5rem 1.75rem 4rem}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent;transition:border-color 120ms,color 120ms}
+a:hover{color:var(--accent-hover);border-bottom-color:currentColor}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:1px}
+.backlink{font-size:.9rem;color:var(--muted);display:inline-block;margin-bottom:2rem;border:none}
+.backlink:hover{color:var(--ink);border:none}
+.post-title{font-size:1.9rem;font-weight:700;letter-spacing:-0.015em;line-height:1.2;margin:0 0 .55rem}
+.post-meta{font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums;margin:0 0 .35rem}
+.post-tags{font-size:.75rem;color:var(--subtle);font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;margin:0 0 2.2rem}
+article{font-size:1.05rem;line-height:1.72}
+article h2{font-size:1.25rem;font-weight:700;letter-spacing:-0.005em;margin:2.4rem 0 .9rem;padding-bottom:.4rem;border-bottom:1px solid var(--rule)}
+article h3{font-size:1.05rem;font-weight:700;margin:1.8rem 0 .55rem}
+article p{margin:0 0 1.15rem}
+article ul,article ol{margin:0 0 1.2rem;padding-left:1.45em}
+article li{margin-bottom:.5rem}
+article strong{font-weight:700}
+article code{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:.86em;background:var(--code-bg);padding:.12em .4em;border-radius:3px}
+article pre{background:var(--code-bg);border:1px solid var(--rule);border-radius:6px;padding:1rem 1.1rem;overflow:auto;margin:0 0 1.3rem}
+article pre code{background:none;padding:0;font-size:.82rem;line-height:1.5}
+article blockquote{margin:0 0 1.3rem;padding:.2rem 0 .2rem 1.1rem;border-left:3px solid var(--rule);color:var(--muted);font-style:italic}
+article hr{border:0;border-top:1px solid var(--rule);margin:2.2rem 0}
+article img{max-width:100%;height:auto;border-radius:6px;border:1px solid var(--rule)}
+article a{font-weight:500}
+.tipjar{margin:2.8rem 0 0;padding:1.05rem 1.2rem;background:var(--surface);border:1px solid var(--rule);border-radius:6px;font-size:.95rem}
+.tipjar p{margin:0}
+.post-footer{margin-top:2.5rem;padding-top:1.4rem;border-top:1px solid var(--rule);font-size:.9rem;color:var(--muted)}
+.post-footer a{color:var(--muted)}.post-footer a:hover{color:var(--ink)}
+.writing-h{font-size:1.75rem;font-weight:700;letter-spacing:-0.01em;margin:0 0 .3rem}
+.writing-sub{color:var(--muted);font-size:.95rem;margin:0 0 2.5rem}
+.post-list{list-style:none;padding:0;margin:0}
+.post-list li{margin:0 0 1.9rem;padding:0 0 1.9rem;border-bottom:1px solid var(--rule)}
+.post-list li:last-child{border-bottom:0}
+.pl-title{font-size:1.2rem;font-weight:700;margin:0 0 .25rem;line-height:1.3}
+.pl-title a{color:var(--ink);border:none}
+.pl-title a:hover{color:var(--accent)}
+.pl-meta{font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums;margin:0 0 .4rem}
+.pl-summary{font-size:.95rem;color:var(--muted);margin:0;line-height:1.55}
+@media (max-width:480px){.wrap{padding:2.2rem 1.2rem 3rem}.post-title{font-size:1.5rem}}
+`;
+
+function buildPost(post) {
+  const tagsHtml = ifArr(post.tags, ts => `<p class="post-tags">${ts.map(esc).join(' · ')}</p>`);
+  const repoHtml = post.repo ? ` &middot; <a href="${esc(post.repo)}" rel="noopener">code on GitHub ↗</a>` : '';
+  return `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>${esc(post.title)} — ${esc(fullName)}</title>
+<meta name="description" content="${esc(post.summary || '')}" />
+<style>${WRITING_CSS}</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="backlink" href="writing.html">← all writing</a>
+  <h1 class="post-title">${esc(post.title)}</h1>
+  <p class="post-meta">${fmtDate(post.date)}</p>
+  ${tagsHtml}
+  <article>
+${mdToHtml(post.body || '')}
+  </article>
+  ${tipJar()}
+  <p class="post-footer"><a href="index.html">${esc(fullName)}</a>${repoHtml}</p>
+</div>
+</body>
+</html>`;
+}
+
+function buildWritingIndex(list) {
+  const items = list.map(p => `  <li>
+    <h2 class="pl-title"><a href="${esc(p.slug)}.html">${esc(p.title)}</a></h2>
+    <p class="pl-meta">${fmtDate(p.date)}</p>
+    ${p.summary ? `<p class="pl-summary">${esc(p.summary)}</p>` : ''}
+  </li>`).join('\n');
+  return `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Writing — ${esc(fullName)}</title>
+<meta name="description" content="Tools I build with AI to make my life easier — and what I learn building them." />
+<style>${WRITING_CSS}</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="backlink" href="index.html">← ${esc(fullName)}</a>
+  <h1 class="writing-h">Writing</h1>
+  <p class="writing-sub">Tools I build with AI to make my life easier — and what I learn building them.</p>
+  <ul class="post-list">
+${items}
+  </ul>
+</div>
+</body>
+</html>`;
+}
+
 // ── Write outputs ──────────────────────────────────────────────────────────────
 
-writeFileSync(join(outDir, 'index.html'), buildIndex(), 'utf8');
-writeFileSync(join(outDir, 'cv.html'),    buildCV(),    'utf8');
-writeFileSync(join(outDir, 'CNAME'),      'tnguyen.cz\n', 'utf8'); // GitHub Pages custom domain
+const built = [];
+function emit(file, html) { writeFileSync(join(outDir, file), html, 'utf8'); built.push(file); }
+
+emit('index.html', buildIndex());
+emit('cv.html',    buildCV());
+writeFileSync(join(outDir, 'CNAME'), 'tnguyen.cz\n', 'utf8'); built.push('CNAME'); // GitHub Pages custom domain
+
+if (posts.length) {
+  emit('writing.html', buildWritingIndex(posts));
+  for (const post of posts) emit(`${post.slug}.html`, buildPost(post));
+}
 
 console.log('Built:');
-console.log('  ' + join(outDir, 'index.html'));
-console.log('  ' + join(outDir, 'cv.html'));
-console.log('  ' + join(outDir, 'CNAME'));
+for (const f of built) console.log('  ' + join(outDir, f));
