@@ -107,7 +107,7 @@
       "description": "A single-file local tool that pulls my un-API-able Watch Later, LLM-categorizes every video, and lets me filter by topic / year / length, watch in an embedded player, and remove on the spot (with undo). Built with Claude Code.",
       "tech": ["Python", "yt-dlp", "JavaScript", "LLM", "Claude Code"],
       "links": {
-        "post": "taming-watch-later.html"
+        "post": "yt-watch-later.html"
       }
     }
   ],

@@ -1,7 +1,7 @@
 ---
 title: "I let my Watch Later hit 2,455 videos — then built a way out"
 date: "2026-06-15"
-slug: "taming-watch-later"
+slug: "yt-watch-later"
 summary: "Pulling, categorizing, and culling a 2,455-video YouTube Watch Later — built in a couple of evenings with Claude Code, with a few genuinely interesting dead-ends."
 tags: ["AI tooling", "automation", "side project"]
 ---
