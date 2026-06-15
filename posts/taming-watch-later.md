@@ -4,7 +4,6 @@ date: "2026-06-15"
 slug: "taming-watch-later"
 summary: "Pulling, categorizing, and culling a 2,455-video YouTube Watch Later — built in a couple of evenings with Claude Code, with a few genuinely interesting dead-ends."
 tags: ["AI tooling", "automation", "side project"]
-repo: "https://github.com/michitrung/watch-later-tamer"
 ---
 
 Watch Later is where videos go to be forgotten. Mine had **2,455** of them — about 975 hours, roughly 40 days of continuous video I was never realistically going to watch. The list had quietly become write-only: I added to it constantly and never went back, because scrolling 2,455 items to find one worth watching is its own chore.
@@ -40,5 +39,3 @@ The code isn't the interesting bit — a Python puller, an LLM classifier, a sin
 From 2,455 to a list I can actually navigate: filter to "Finance, 2025, under 20 minutes," watch one inline, delete it, move on. The phantoms are gone. Every video carries its upload date, so stale news is easy to tell from evergreen.
 
 It's a personal tool: it reads my *own* YouTube login locally to act on my behalf, and parts of it lean on YouTube's internals — which can change or break — so the public version is honestly *works-on-my-machine, at your own risk*. But the broader point is one I keep relearning: the cost of building a small, exactly-right tool for your own annoyance has dropped far enough that it's often cheaper than tolerating the annoyance.
-
-The code is on GitHub. If it saved you an afternoon, there's a coffee link below.

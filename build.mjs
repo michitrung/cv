@@ -80,11 +80,13 @@ function parseFrontmatter(raw) {
 
 /** Render inline Markdown (code, images, links, bold, italic) with HTML escaping. */
 function mdInline(s) {
+  // Neutralize dangerous URL schemes (javascript:, data:, vbscript:) in links/images.
+  const safeUrl = u => /^\s*(javascript|data|vbscript):/i.test(u) ? '#' : u;
   const codes = [];
   s = s.replace(/`([^`]+)`/g, (_, c) => { codes.push(c); return `[[[${codes.length - 1}]]]`; });
   s = esc(s);
-  s = s.replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, (_, a, src) => `<img alt="${a}" src="${src}" loading="lazy" />`);
-  s = s.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_, t, u) => `<a href="${u}" rel="noopener">${t}</a>`);
+  s = s.replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, (_, a, src) => `<img alt="${a}" src="${safeUrl(src)}" loading="lazy" />`);
+  s = s.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_, t, u) => `<a href="${safeUrl(u)}" rel="noopener">${t}</a>`);
   s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
   s = s.replace(/\*([^*]+)\*/g, '<em>$1</em>');
   s = s.replace(/\[\[\[(\d+)\]\]\]/g, (_, i) => `<code>${esc(codes[+i])}</code>`);
