@@ -726,8 +726,7 @@ body > footer {
     ${posts.length ? '<a href="writing.html">writing</a>' : ''}
     <a href="#toolbox">toolbox</a>
     <a href="#education">education</a>
-    <a href="cv.html">cv</a>
-    <a href="cv.pdf" download="${cvDownloadName}">cv.pdf</a>
+    <a href="${cvDownloadName}">cv</a>
   </nav>
 
   ${pitch   ? `<p class="pitch">${esc(pitch)}</p>` : ''}
@@ -761,7 +760,7 @@ body > footer {
   <div class="footer-row">
     ${footerLinks}
   </div>
-  <p class="cv-callout">Full CV: <a href="cv.pdf" download="${cvDownloadName}">cv.pdf</a></p>
+  <p class="cv-callout"><a href="${cvDownloadName}">Download CV (PDF)</a></p>
 </footer>
 
 </body>
