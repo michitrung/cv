@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>I let my Watch Later hit 2,455 videos — then built a way out — Thanh Trung Nguyen (Michal)</title>
+<meta name="description" content="Pulling, categorizing, and culling a 2,455-video YouTube Watch Later — built in a couple of evenings with Claude Code, with a few genuinely interesting dead-ends." />
+<style>
+:root{--bg:#fefefc;--ink:#1a1a1a;--muted:#6b6b6b;--subtle:#6b6b6b;--rule:#e5e3dc;
+  --accent:#2a5db0;--accent-hover:#1a3d80;--surface:#f5f4f0;--code-bg:#f0eee8}
+@media (prefers-color-scheme:dark){:root{--bg:#15140f;--ink:#ecebe6;--muted:#9a978d;--subtle:#9a978d;
+  --rule:#2a2823;--accent:#8fb4ff;--accent-hover:#b8ceff;--surface:#1f1e18;--code-bg:#222018}}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+  font-family:Charter,"Bitstream Charter","Sitka Text",Cambria,Georgia,serif;font-size:18px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+::selection{background:#fff3a0;color:#1a1a1a}
+@media (prefers-color-scheme:dark){::selection{background:#3d3500;color:#ecebe6}}
+.wrap{max-width:680px;margin:0 auto;padding:3.5rem 1.75rem 4rem}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent;transition:border-color 120ms,color 120ms}
+a:hover{color:var(--accent-hover);border-bottom-color:currentColor}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:1px}
+.backlink{font-size:.9rem;color:var(--muted);display:inline-block;margin-bottom:2rem;border:none}
+.backlink:hover{color:var(--ink);border:none}
+.post-title{font-size:1.9rem;font-weight:700;letter-spacing:-0.015em;line-height:1.2;margin:0 0 .55rem}
+.post-meta{font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums;margin:0 0 .35rem}
+.post-tags{font-size:.75rem;color:var(--subtle);font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;margin:0 0 2.2rem}
+article{font-size:1.05rem;line-height:1.72}
+article h2{font-size:1.25rem;font-weight:700;letter-spacing:-0.005em;margin:2.4rem 0 .9rem;padding-bottom:.4rem;border-bottom:1px solid var(--rule)}
+article h3{font-size:1.05rem;font-weight:700;margin:1.8rem 0 .55rem}
+article p{margin:0 0 1.15rem}
+article ul,article ol{margin:0 0 1.2rem;padding-left:1.45em}
+article li{margin-bottom:.5rem}
+article strong{font-weight:700}
+article code{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:.86em;background:var(--code-bg);padding:.12em .4em;border-radius:3px}
+article pre{background:var(--code-bg);border:1px solid var(--rule);border-radius:6px;padding:1rem 1.1rem;overflow:auto;margin:0 0 1.3rem}
+article pre code{background:none;padding:0;font-size:.82rem;line-height:1.5}
+article blockquote{margin:0 0 1.3rem;padding:.2rem 0 .2rem 1.1rem;border-left:3px solid var(--rule);color:var(--muted);font-style:italic}
+article hr{border:0;border-top:1px solid var(--rule);margin:2.2rem 0}
+article img{max-width:100%;height:auto;border-radius:6px;border:1px solid var(--rule)}
+article a{font-weight:500}
+.tipjar{margin:2.8rem 0 0;padding:1.05rem 1.2rem;background:var(--surface);border:1px solid var(--rule);border-radius:6px;font-size:.95rem}
+.tipjar p{margin:0}
+.post-footer{margin-top:2.5rem;padding-top:1.4rem;border-top:1px solid var(--rule);font-size:.9rem;color:var(--muted)}
+.post-footer a{color:var(--muted)}.post-footer a:hover{color:var(--ink)}
+.writing-h{font-size:1.75rem;font-weight:700;letter-spacing:-0.01em;margin:0 0 .3rem}
+.writing-sub{color:var(--muted);font-size:.95rem;margin:0 0 2.5rem}
+.post-list{list-style:none;padding:0;margin:0}
+.post-list li{margin:0 0 1.9rem;padding:0 0 1.9rem;border-bottom:1px solid var(--rule)}
+.post-list li:last-child{border-bottom:0}
+.pl-title{font-size:1.2rem;font-weight:700;margin:0 0 .25rem;line-height:1.3}
+.pl-title a{color:var(--ink);border:none}
+.pl-title a:hover{color:var(--accent)}
+.pl-meta{font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums;margin:0 0 .4rem}
+.pl-summary{font-size:.95rem;color:var(--muted);margin:0;line-height:1.55}
+@media (max-width:480px){.wrap{padding:2.2rem 1.2rem 3rem}.post-title{font-size:1.5rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="backlink" href="writing.html">← all writing</a>
+  <h1 class="post-title">I let my Watch Later hit 2,455 videos — then built a way out</h1>
+  <p class="post-meta">15 June 2026</p>
+  <p class="post-tags">AI tooling · automation · side project</p>
+  <article>
+<p>Watch Later is where videos go to be forgotten. Mine had <strong>2,455</strong> of them — about 975 hours, roughly 40 days of continuous video I was never realistically going to watch. The list had quietly become write-only: I added to it constantly and never went back, because scrolling 2,455 items to find one worth watching is its own chore.</p>
+<p>So, like any reasonable person with a backlog problem, I spent two evenings building a tool instead of watching any of the videos. I built it with <a href="https://www.claude.com/product/claude-code" rel="noopener">Claude Code</a>, partly to see how far &quot;describe the problem, review the work&quot; could actually go. Here&#39;s what came out — and the few places it got interesting.</p>
+<h2>First problem: you can&#39;t get the list out</h2>
+<p>YouTube&#39;s official API can&#39;t read Watch Later. It&#39;s a system playlist, and that access was removed years ago — so even <em>seeing</em> what&#39;s in there programmatically is the first hurdle.</p>
+<p>The workaround is the one <code>yt-dlp</code> uses: read the browser&#39;s logged-in cookies and pull the playlist metadata that way. One pass, no per-video hammering, and I had all 2,455 as structured data — title, channel, duration, views. That alone was clarifying: 1,246 unique channels, most videos in the 5–20 minute range, a long tail reaching back to 2009.</p>
+<h2>Making 2,455 videos browsable</h2>
+<p>A flat list of 2,455 is still unusable, so the tool categorizes every video into a dozen topics — Science, Tech, Finance, and so on — with an LLM reading the title and channel, fanned out across workers so it takes a minute rather than an afternoon. Then it bakes everything into a single self-contained HTML file: filter by topic, by year, by length; sort by a rough &quot;watch rank&quot;; search. No server, no build step — you open the file.</p>
+<h2>The interesting part: deleting things</h2>
+<p>Watching is only half of it. The point was to <em>cull</em>, and removing things from Watch Later turned out to be a small rabbit hole:</p>
+<ul><li>The official API can&#39;t modify Watch Later <strong>at all</strong>. So removal uses the same internal calls YouTube&#39;s own web app makes — locally, for my own account.</li><li>My first attempt clicked the page&#39;s &quot;Remove&quot; menu via the DOM. It removed 7 of 25 marked videos and reported success. YouTube <em>virtualizes</em> the long list — only ~100 rows exist in the page at any moment — so most of what I&#39;d marked was never on the page to click. Removing by video ID instead (no rendering required) fixed it.</li><li>67 videos were <code>[Deleted video]</code> / <code>[Private video]</code> phantoms: counted in the total, but hidden from the page with no way to even see them. The same by-ID removal cleared them.</li></ul>
+<p>The last piece was watching <em>without leaving</em>: each card embeds a player, and a Remove button beside it deletes the video the moment I&#39;ve decided against it — with an Undo, because instant-delete without undo is a trap. The browser can&#39;t make those authenticated calls itself, so a tiny local helper does it.</p>
+<h2>What the &quot;AI part&quot; actually was</h2>
+<p>The code isn&#39;t the interesting bit — a Python puller, an LLM classifier, a single-file front-end, a small local server. What Claude Code changed was the <em>ratio</em>: almost all of my time went to judgment and verification — is this the right way to remove, will it scale, did it actually do what it printed — and almost none to typing. Every dead-end above was found by running the thing and watching it fail, not by reading docs. I stayed the reviewer; the editor stayed fast.</p>
+<h2>Where it landed</h2>
+<p>From 2,455 to a list I can actually navigate: filter to &quot;Finance, 2025, under 20 minutes,&quot; watch one inline, delete it, move on. The phantoms are gone. Every video carries its upload date, so stale news is easy to tell from evergreen.</p>
+<p>It&#39;s a personal tool: it reads my <em>own</em> YouTube login locally to act on my behalf, and parts of it lean on YouTube&#39;s internals — which can change or break — so the public version is honestly <em>works-on-my-machine, at your own risk</em>. But the broader point is one I keep relearning: the cost of building a small, exactly-right tool for your own annoyance has dropped far enough that it&#39;s often cheaper than tolerating the annoyance.</p>
+  </article>
+  
+  <p class="post-footer"><a href="index.html">Thanh Trung Nguyen (Michal)</a></p>
+</div>
+</body>
+</html>

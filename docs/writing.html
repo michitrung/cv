@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Writing — Thanh Trung Nguyen (Michal)</title>
+<meta name="description" content="Tools I build with AI to make my life easier — and what I learn building them." />
+<style>
+:root{--bg:#fefefc;--ink:#1a1a1a;--muted:#6b6b6b;--subtle:#6b6b6b;--rule:#e5e3dc;
+  --accent:#2a5db0;--accent-hover:#1a3d80;--surface:#f5f4f0;--code-bg:#f0eee8}
+@media (prefers-color-scheme:dark){:root{--bg:#15140f;--ink:#ecebe6;--muted:#9a978d;--subtle:#9a978d;
+  --rule:#2a2823;--accent:#8fb4ff;--accent-hover:#b8ceff;--surface:#1f1e18;--code-bg:#222018}}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+  font-family:Charter,"Bitstream Charter","Sitka Text",Cambria,Georgia,serif;font-size:18px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+::selection{background:#fff3a0;color:#1a1a1a}
+@media (prefers-color-scheme:dark){::selection{background:#3d3500;color:#ecebe6}}
+.wrap{max-width:680px;margin:0 auto;padding:3.5rem 1.75rem 4rem}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent;transition:border-color 120ms,color 120ms}
+a:hover{color:var(--accent-hover);border-bottom-color:currentColor}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:1px}
+.backlink{font-size:.9rem;color:var(--muted);display:inline-block;margin-bottom:2rem;border:none}
+.backlink:hover{color:var(--ink);border:none}
+.post-title{font-size:1.9rem;font-weight:700;letter-spacing:-0.015em;line-height:1.2;margin:0 0 .55rem}
+.post-meta{font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums;margin:0 0 .35rem}
+.post-tags{font-size:.75rem;color:var(--subtle);font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;margin:0 0 2.2rem}
+article{font-size:1.05rem;line-height:1.72}
+article h2{font-size:1.25rem;font-weight:700;letter-spacing:-0.005em;margin:2.4rem 0 .9rem;padding-bottom:.4rem;border-bottom:1px solid var(--rule)}
+article h3{font-size:1.05rem;font-weight:700;margin:1.8rem 0 .55rem}
+article p{margin:0 0 1.15rem}
+article ul,article ol{margin:0 0 1.2rem;padding-left:1.45em}
+article li{margin-bottom:.5rem}
+article strong{font-weight:700}
+article code{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:.86em;background:var(--code-bg);padding:.12em .4em;border-radius:3px}
+article pre{background:var(--code-bg);border:1px solid var(--rule);border-radius:6px;padding:1rem 1.1rem;overflow:auto;margin:0 0 1.3rem}
+article pre code{background:none;padding:0;font-size:.82rem;line-height:1.5}
+article blockquote{margin:0 0 1.3rem;padding:.2rem 0 .2rem 1.1rem;border-left:3px solid var(--rule);color:var(--muted);font-style:italic}
+article hr{border:0;border-top:1px solid var(--rule);margin:2.2rem 0}
+article img{max-width:100%;height:auto;border-radius:6px;border:1px solid var(--rule)}
+article a{font-weight:500}
+.tipjar{margin:2.8rem 0 0;padding:1.05rem 1.2rem;background:var(--surface);border:1px solid var(--rule);border-radius:6px;font-size:.95rem}
+.tipjar p{margin:0}
+.post-footer{margin-top:2.5rem;padding-top:1.4rem;border-top:1px solid var(--rule);font-size:.9rem;color:var(--muted)}
+.post-footer a{color:var(--muted)}.post-footer a:hover{color:var(--ink)}
+.writing-h{font-size:1.75rem;font-weight:700;letter-spacing:-0.01em;margin:0 0 .3rem}
+.writing-sub{color:var(--muted);font-size:.95rem;margin:0 0 2.5rem}
+.post-list{list-style:none;padding:0;margin:0}
+.post-list li{margin:0 0 1.9rem;padding:0 0 1.9rem;border-bottom:1px solid var(--rule)}
+.post-list li:last-child{border-bottom:0}
+.pl-title{font-size:1.2rem;font-weight:700;margin:0 0 .25rem;line-height:1.3}
+.pl-title a{color:var(--ink);border:none}
+.pl-title a:hover{color:var(--accent)}
+.pl-meta{font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums;margin:0 0 .4rem}
+.pl-summary{font-size:.95rem;color:var(--muted);margin:0;line-height:1.55}
+@media (max-width:480px){.wrap{padding:2.2rem 1.2rem 3rem}.post-title{font-size:1.5rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="backlink" href="index.html">← Thanh Trung Nguyen (Michal)</a>
+  <h1 class="writing-h">Writing</h1>
+  <p class="writing-sub">Tools I build with AI to make my life easier — and what I learn building them.</p>
+  <ul class="post-list">
+  <li>
+    <h2 class="pl-title"><a href="yt-watch-later.html">I let my Watch Later hit 2,455 videos — then built a way out</a></h2>
+    <p class="pl-meta">15 June 2026</p>
+    <p class="pl-summary">Pulling, categorizing, and culling a 2,455-video YouTube Watch Later — built in a couple of evenings with Claude Code, with a few genuinely interesting dead-ends.</p>
+  </li>
+  </ul>
+</div>
+</body>
+</html>
